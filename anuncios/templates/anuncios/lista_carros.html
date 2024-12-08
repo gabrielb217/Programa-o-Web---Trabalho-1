@@ -1,0 +1,48 @@
+{% extends 'anuncios/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="text-center text-primary">Anúncios de Carros</h1>
+<div class="row">
+    {% for carro in carros %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            {% if carro.fotos.first %}
+            <img src="{{ carro.fotos.first.imagem.url }}" class="card-img-top" alt="Foto do carro">
+            {% else %}
+            <img src="{% static 'anuncios/img/placeholder_car.jpg' %}" class="card-img-top" alt="Foto indisponível">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ carro.marca }} {{ carro.modelo }}</h5>
+                <p class="card-text">Ano: {{ carro.ano }}</p>
+                <p class="card-text">Preço: R$ {{ carro.preco }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if carros.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ carros.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for num in carros.paginator.page_range %}
+        <li class="page-item {% if carros.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        {% if carros.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ carros.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
