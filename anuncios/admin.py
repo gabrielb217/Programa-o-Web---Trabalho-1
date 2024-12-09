@@ -3,6 +3,9 @@ from .models import Carro, FotoCarro
 
 @admin.register(Carro)
 class CarroAdmin(admin.ModelAdmin):
-    list_display = ('marca', 'modelo', 'ano', 'preco', 'vendedor')
+    list_display = ('marca', 'modelo', 'ano', 'preco', 'foto_principal')
+    search_fields = ('marca', 'modelo')
 
-admin.site.register(FotoCarro)
+@admin.register(FotoCarro)
+class FotoCarroAdmin(admin.ModelAdmin):
+    list_display = ('carro', 'imagem')

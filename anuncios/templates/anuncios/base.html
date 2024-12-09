@@ -3,36 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Vendas de Carros</title>
+    <title>Vendas de Carros</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Plataforma de Vendas de Carros</a>
+            <a class="navbar-brand" href="/">Vendas de Carros</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="/">Início</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'lista_carros' %}active{% endif %}" href="{% url 'lista_carros' %}">Anúncios</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'criar_carro' %}active{% endif %}" href="{% url 'criar_carro' %}">Criar Carro</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'admin:index' %}active{% endif %}" href="/admin/">Admin</a>
                     </li>
                 </ul>
-                <form class="d-flex" method="GET" action="{% url 'busca_carros' %}">
+                <form class="d-flex me-auto ms-3" method="GET" action="{% url 'busca_carros' %}">
                     <input class="form-control me-2" type="search" name="q" placeholder="Buscar carros" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                 </form>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link" style="border: none; padding: 0; background: none; color: inherit; text-decoration: none;">Logout</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registrar_usuario' %}">Registrar</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>
+    
+    <!-- Main Content -->
     <div class="container py-4">
         {% block content %}
         {% endblock %}
