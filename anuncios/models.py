@@ -8,7 +8,7 @@ class Carro(models.Model):
     ano = models.PositiveIntegerField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     descricao = models.TextField()
-    foto_principal = models.ImageField(upload_to='carros/', blank=True, null=True)  # Foto principal
+    foto_principal = models.ImageField(upload_to='carros/', blank=True, null=True)  # Foto principal opcional
     data_cadastro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

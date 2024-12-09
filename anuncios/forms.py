@@ -6,12 +6,13 @@ from .models import Carro, FotoCarro
 class CarroForm(forms.ModelForm):
     class Meta:
         model = Carro
-        fields = ['marca', 'modelo', 'ano', 'preco', 'descricao']
+        fields = ['marca', 'modelo', 'ano', 'preco', 'descricao', 'foto_principal']
 
 class FotoCarroForm(forms.ModelForm):
     class Meta:
         model = FotoCarro
         fields = ['imagem']
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)

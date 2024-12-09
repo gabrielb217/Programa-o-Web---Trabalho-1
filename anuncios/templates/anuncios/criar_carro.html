@@ -4,7 +4,11 @@
 <div class="container">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ carro_form.as_p }}
+        <div class="mb-3">
+            <label for="id_imagens" class="form-label">Imagens adicionais do carro</label>
+            <input type="file" name="imagens" id="id_imagens" class="form-control" multiple>
+        </div>
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 </div>
